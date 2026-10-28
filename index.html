@@ -2,14 +2,14 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SatrupaKalyana Hub | Sekolah Rakyat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SatrupaKalyana Hub | Sekolah Rakyat Banyumas</title>
     
     <!-- Konfigurasi PWA -->
     <meta name="theme-color" content="#A02B2E">
-    <meta name="description" content="Portal Aplikasi UPT Sekolah Rakyat">
+    <meta name="description" content="Portal Aplikasi UPT Sekolah Rakyat Banyumas">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="unnamed.png">
+    <link rel="apple-touch-icon" href="unnamed_2.png">
     
     <!-- Font & Icon -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,6 @@
     
     <style>
         :root {
-            /* Adaptasi warna dari logo */
             --primary-red: #A02B2E; 
             --dark-gray: #2D2D2D; 
             --bg-light: #F9F9F9;
@@ -48,7 +47,7 @@
         }
 
         header img {
-            max-height: 90px;
+            max-height: 100px;
             margin-bottom: 10px;
         }
 
@@ -66,6 +65,30 @@
             font-size: 0.95rem;
             color: #666;
             margin-top: 5px;
+        }
+
+        /* --- CSS TOMBOL INSTALL --- */
+        #installBtn {
+            display: none; /* Sembunyi secara default */
+            margin-top: 15px;
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(160, 43, 46, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        #installBtn:active { transform: scale(0.95); }
+
+        /* Otomatis hilangkan tombol install jika dibuka di mode aplikasi (PWA) */
+        @media all and (display-mode: standalone) {
+            #installBtn { display: none !important; }
         }
 
         .container {
@@ -119,20 +142,59 @@
             line-height: 1.5;
         }
 
+        /* Mengubah link menjadi tombol untuk Iframe */
         .card-btn {
             display: inline-block;
             background-color: var(--primary-red);
             color: white;
-            text-decoration: none;
+            border: none;
             padding: 14px 20px;
             border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
             font-weight: 600;
+            cursor: pointer;
             transition: background-color 0.3s ease;
             width: 100%;
         }
 
         .card-btn:hover {
             background-color: #852225;
+        }
+
+        /* --- CSS IFRAME MODAL --- */
+        #appModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #fff;
+            z-index: 9999;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--primary-red);
+            color: white;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        #appFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            flex-grow: 1;
         }
 
         footer {
@@ -145,77 +207,116 @@
         }
 
         @media (max-width: 600px) {
-            .container {
-                padding: 25px 20px;
-            }
-            header h1 {
-                font-size: 1.5rem;
-            }
+            .container { padding: 25px 20px; }
+            header h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- Pastikan file logo Anda di-rename atau disesuaikan path-nya di sini saat upload -->
-        <img src="unnamed.png" alt="Logo Sekolah Rakyat" id="logo">
+        <!-- Logo diperbarui ke versi Banyumas -->
+        <img src="unnamed_2.png" alt="Logo Sekolah Rakyat Banyumas" id="logo">
         <h1>Satrupa<span>Kalyana</span> Hub</h1>
         <p>Portal Sistem Informasi Terpadu</p>
+        
+        <!-- Tombol Install PWA -->
+        <button id="installBtn"><i class="fa-solid fa-download" style="margin-right: 5px;"></i> Install Aplikasi</button>
     </header>
 
     <div class="container">
         <!-- Aplikasi 1: Data Induk -->
         <div class="card">
-            <div class="card-icon">
-                <i class="fa-solid fa-users-rectangle"></i>
-            </div>
+            <div class="card-icon"><i class="fa-solid fa-users-rectangle"></i></div>
             <div class="card-title">Modul Data Induk</div>
             <div class="card-desc">Sistem pengelolaan data pokok dan informasi dasar anak asuh.</div>
-            <a href="https://script.google.com/macros/s/AKfycbysqFaVB51v1dDA28l0mb6K-8b1TEsyDHN2KtSNAJIcFwGQrKYs9TrmP5TuembhH2vSqA/exec" target="_blank" rel="noopener noreferrer" class="card-btn">
+            <button class="card-btn" onclick="openApp('Modul Data Induk', 'https://script.google.com/macros/s/AKfycbysqFaVB51v1dDA28l0mb6K-8b1TEsyDHN2KtSNAJIcFwGQrKYs9TrmP5TuembhH2vSqA/exec')">
                 <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
-            </a>
+            </button>
         </div>
 
         <!-- Aplikasi 2: Logistik -->
         <div class="card">
-            <div class="card-icon">
-                <i class="fa-solid fa-boxes-stacked"></i>
-            </div>
+            <div class="card-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
             <div class="card-title">Manajemen Logistik</div>
             <div class="card-desc">Pemantauan distribusi dan pengelolaan stok barang logistik anak.</div>
-            <a href="https://script.google.com/macros/s/AKfycbzuskPPzPTdOU-WDx4wamElI7pSsJfZ6l0imEF_WYlYO5zL64ifzzjuVgcxZsHjZs2hsg/exec" target="_blank" rel="noopener noreferrer" class="card-btn">
+            <button class="card-btn" onclick="openApp('Manajemen Logistik', 'https://script.google.com/macros/s/AKfycbzuskPPzPTdOU-WDx4wamElI7pSsJfZ6l0imEF_WYlYO5zL64ifzzjuVgcxZsHjZs2hsg/exec')">
                 <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
-            </a>
+            </button>
         </div>
 
         <!-- Aplikasi 3: Kesehatan -->
         <div class="card">
-            <div class="card-icon">
-                <i class="fa-solid fa-heart-pulse"></i>
-            </div>
+            <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
             <div class="card-title">Manajemen Kesehatan</div>
             <div class="card-desc">Pencatatan rekam medis dan pemantauan riwayat kesehatan anak.</div>
-            <a href="https://script.google.com/macros/s/AKfycbxyYBU-0dH6Mt5s7fBgKOQNgkjk0aYh2U8HzIwtW_in2jzufA_VqLZ95KrKXFVZFPI2/exec" target="_blank" rel="noopener noreferrer" class="card-btn">
+            <button class="card-btn" onclick="openApp('Manajemen Kesehatan', 'https://script.google.com/macros/s/AKfycbxyYBU-0dH6Mt5s7fBgKOQNgkjk0aYh2U8HzIwtW_in2jzufA_VqLZ95KrKXFVZFPI2/exec')">
                 <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
-            </a>
+            </button>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 SatrupaKalyana Hub - Sekolah Rakyat
+        &copy; 2026 SatrupaKalyana Hub - Sekolah Rakyat Banyumas
     </footer>
 
-    <!-- Service Worker Registration -->
+    <!-- HTML UNTUK IFRAME MODAL -->
+    <div id="appModal">
+        <div class="modal-header">
+            <span id="modalTitle">Aplikasi</span>
+            <button class="close-btn" onclick="closeApp()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <iframe id="appFrame" src=""></iframe>
+    </div>
+
+    <!-- SCRIPT GABUNGAN -->
     <script>
+        // 1. Script Iframe
+        function openApp(title, url) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('appFrame').src = url;
+            document.getElementById('appModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Kunci scroll halaman belakang
+        }
+
+        function closeApp() {
+            document.getElementById('appModal').style.display = 'none';
+            document.getElementById('appFrame').src = '';
+            document.body.style.overflow = 'auto'; // Buka scroll
+        }
+
+        // 2. Script Tombol Install PWA
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'inline-block'; // Munculkan tombol di browser
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt !== null) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installBtn.style.display = 'none';
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installBtn.style.display = 'none';
+            deferredPrompt = null;
+        });
+
+        // 3. Script Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registered dengan scope: ', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('ServiceWorker registration gagal: ', error);
-                    });
+                    .then(registration => console.log('ServiceWorker registered'))
+                    .catch(error => console.log('ServiceWorker registration gagal: ', error));
             });
         }
     </script>
