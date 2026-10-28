@@ -9,7 +9,8 @@
     <meta name="theme-color" content="#A02B2E">
     <meta name="description" content="Portal Aplikasi UPT Sekolah Rakyat Banyumas">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon sr.png">
+    <!-- NAMA FILE DIPERBAIKI (TANPA SPASI) -->
+    <link rel="apple-touch-icon" href="icon-sr.png">
     
     <!-- Font & Icon -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -69,7 +70,7 @@
 
         /* --- CSS TOMBOL INSTALL --- */
         #installBtn {
-            display: inline-block; /* DIBUAT PERMANEN MUNCUL DI BROWSER */
+            display: inline-block;
             margin-top: 15px;
             background-color: var(--primary-red);
             color: white;
@@ -86,7 +87,6 @@
 
         #installBtn:active { transform: scale(0.95); }
 
-        /* Sembunyikan tombol HANYA JIKA sedang dibuka di dalam mode Aplikasi/PWA */
         @media all and (display-mode: standalone) {
             #installBtn { display: none !important; }
         }
@@ -97,7 +97,7 @@
             max-width: 1100px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
             width: 100%;
         }
@@ -142,7 +142,6 @@
             line-height: 1.5;
         }
 
-        /* Mengubah link menjadi tombol untuk Iframe */
         .card-btn {
             display: inline-block;
             background-color: var(--primary-red);
@@ -215,12 +214,11 @@
 <body>
 
     <header>
-        <!-- Logo diperbarui ke versi Banyumas -->
-        <img src="icon sr.png" alt="Logo Sekolah Rakyat Banyumas" id="logo">
+        <!-- NAMA FILE DIPERBAIKI (TANPA SPASI) -->
+        <img src="icon-sr.png" alt="Logo Sekolah Rakyat Banyumas" id="logo">
         <h1>Satrupa<span>Kalyana</span> Hub</h1>
         <p>Portal Sistem Informasi Terpadu</p>
         
-        <!-- Tombol Install PWA -->
         <button id="installBtn"><i class="fa-solid fa-download" style="margin-right: 5px;"></i> Install Aplikasi</button>
     </header>
 
@@ -254,6 +252,16 @@
                 <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
             </button>
         </div>
+        
+        <!-- Aplikasi 4: Jadwal Shift (BARU) -->
+        <div class="card">
+            <div class="card-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="card-title">Jadwal Shift</div>
+            <div class="card-desc">Informasi dan pemantauan jadwal shift kerja operasional.</div>
+            <button class="card-btn" onclick="openApp('Jadwal Shift', 'https://script.google.com/macros/s/AKfycbzoZvMeTUIs_BrkihBraTgUG0K9xq3IzzfqyFFPs-tYi5wQTRat8Wtb3G27SYVNBqMI/exec')">
+                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
+            </button>
+        </div>
     </div>
 
     <footer>
@@ -276,42 +284,37 @@
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('appFrame').src = url;
             document.getElementById('appModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Kunci scroll halaman belakang
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeApp() {
             document.getElementById('appModal').style.display = 'none';
             document.getElementById('appFrame').src = '';
-            document.body.style.overflow = 'auto'; // Buka scroll
+            document.body.style.overflow = 'auto'; 
         }
 
         // 2. Script Tombol Install PWA
         let deferredPrompt;
         const installBtn = document.getElementById('installBtn');
 
-        // Simpan event install dari browser secara diam-diam di background
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
         });
 
-        // Aksi ketika tombol yang permanen tadi diklik
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
-                // Munculkan popup instalasi bawaan Chrome
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
-                    installBtn.style.display = 'none'; // Sembunyikan jika sukses install
+                    installBtn.style.display = 'none'; 
                 }
                 deferredPrompt = null;
             } else {
-                // Jika diklik tapi Chrome menahan pop-up (karena sudah terinstal atau tidak support)
                 alert('Aplikasi mungkin sudah terinstal atau browser Anda tidak mendukung. Silakan cek menu browser (titik tiga) lalu pilih "Install" atau "Tambahkan ke Layar Utama".');
             }
         });
 
-        // Pastikan tombol hilang jika instalasi berhasil dari luar tombol
         window.addEventListener('appinstalled', () => {
             installBtn.style.display = 'none';
             deferredPrompt = null;
