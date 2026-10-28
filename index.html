@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SatrupaKalyana Hub | Sekolah Rakyat</title>
+    
+    <!-- Konfigurasi PWA -->
+    <meta name="theme-color" content="#A02B2E">
+    <meta name="description" content="Portal Aplikasi UPT Sekolah Rakyat">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="unnamed.png">
+    
+    <!-- Font & Icon -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Adaptasi warna dari logo */
+            --primary-red: #A02B2E; 
+            --dark-gray: #2D2D2D; 
+            --bg-light: #F9F9F9;
+            --card-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--dark-gray);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-bottom: 4px solid var(--primary-red);
+        }
+
+        header img {
+            max-height: 90px;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: var(--dark-gray);
+            font-weight: 700;
+        }
+
+        header h1 span {
+            color: var(--primary-red);
+        }
+        
+        header p {
+            font-size: 0.95rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .container {
+            flex: 1;
+            padding: 40px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+            border: 1px solid #E5E5E5;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(160, 43, 46, 0.12);
+            border-color: var(--primary-red);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 30px;
+            flex-grow: 1;
+            line-height: 1.5;
+        }
+
+        .card-btn {
+            display: inline-block;
+            background-color: var(--primary-red);
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .card-btn:hover {
+            background-color: #852225;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--dark-gray);
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px 20px;
+            }
+            header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Pastikan file logo Anda di-rename atau disesuaikan path-nya di sini saat upload -->
+        <img src="unnamed.png" alt="Logo Sekolah Rakyat" id="logo">
+        <h1>Satrupa<span>Kalyana</span> Hub</h1>
+        <p>Portal Sistem Informasi Terpadu</p>
+    </header>
+
+    <div class="container">
+        <!-- Aplikasi 1: Data Induk -->
+        <div class="card">
+            <div class="card-icon">
+                <i class="fa-solid fa-users-rectangle"></i>
+            </div>
+            <div class="card-title">Modul Data Induk</div>
+            <div class="card-desc">Sistem pengelolaan data pokok dan informasi dasar anak asuh.</div>
+            <a href="https://script.google.com/macros/s/AKfycbysqFaVB51v1dDA28l0mb6K-8b1TEsyDHN2KtSNAJIcFwGQrKYs9TrmP5TuembhH2vSqA/exec" target="_blank" rel="noopener noreferrer" class="card-btn">
+                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
+            </a>
+        </div>
+
+        <!-- Aplikasi 2: Logistik -->
+        <div class="card">
+            <div class="card-icon">
+                <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+            <div class="card-title">Manajemen Logistik</div>
+            <div class="card-desc">Pemantauan distribusi dan pengelolaan stok barang logistik anak.</div>
+            <a href="https://script.google.com/macros/s/AKfycbzuskPPzPTdOU-WDx4wamElI7pSsJfZ6l0imEF_WYlYO5zL64ifzzjuVgcxZsHjZs2hsg/exec" target="_blank" rel="noopener noreferrer" class="card-btn">
+                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
+            </a>
+        </div>
+
+        <!-- Aplikasi 3: Kesehatan -->
+        <div class="card">
+            <div class="card-icon">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+            <div class="card-title">Manajemen Kesehatan</div>
+            <div class="card-desc">Pencatatan rekam medis dan pemantauan riwayat kesehatan anak.</div>
+            <a href="https://script.google.com/macros/s/AKfycbxyYBU-0dH6Mt5s7fBgKOQNgkjk0aYh2U8HzIwtW_in2jzufA_VqLZ95KrKXFVZFPI2/exec" target="_blank" rel="noopener noreferrer" class="card-btn">
+                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 SatrupaKalyana Hub - Sekolah Rakyat
+    </footer>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered dengan scope: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration gagal: ', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
