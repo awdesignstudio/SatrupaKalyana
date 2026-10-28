@@ -69,7 +69,7 @@
 
         /* --- CSS TOMBOL INSTALL --- */
         #installBtn {
-            display: none; /* Sembunyi secara default */
+            display: inline-block; /* DIBUAT PERMANEN MUNCUL DI BROWSER */
             margin-top: 15px;
             background-color: var(--primary-red);
             color: white;
@@ -86,7 +86,7 @@
 
         #installBtn:active { transform: scale(0.95); }
 
-        /* Otomatis hilangkan tombol install jika dibuka di mode aplikasi (PWA) */
+        /* Sembunyikan tombol HANYA JIKA sedang dibuka di dalam mode Aplikasi/PWA */
         @media all and (display-mode: standalone) {
             #installBtn { display: none !important; }
         }
@@ -289,23 +289,29 @@
         let deferredPrompt;
         const installBtn = document.getElementById('installBtn');
 
+        // Simpan event install dari browser secara diam-diam di background
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            installBtn.style.display = 'inline-block'; // Munculkan tombol di browser
         });
 
+        // Aksi ketika tombol yang permanen tadi diklik
         installBtn.addEventListener('click', async () => {
-            if (deferredPrompt !== null) {
+            if (deferredPrompt) {
+                // Munculkan popup instalasi bawaan Chrome
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
-                    installBtn.style.display = 'none';
+                    installBtn.style.display = 'none'; // Sembunyikan jika sukses install
                 }
                 deferredPrompt = null;
+            } else {
+                // Jika diklik tapi Chrome menahan pop-up (karena sudah terinstal atau tidak support)
+                alert('Aplikasi mungkin sudah terinstal atau browser Anda tidak mendukung. Silakan cek menu browser (titik tiga) lalu pilih "Install" atau "Tambahkan ke Layar Utama".');
             }
         });
 
+        // Pastikan tombol hilang jika instalasi berhasil dari luar tombol
         window.addEventListener('appinstalled', () => {
             installBtn.style.display = 'none';
             deferredPrompt = null;
