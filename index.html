@@ -222,7 +222,7 @@
         <button id="installBtn"><i class="fa-solid fa-download" style="margin-right: 5px;"></i> Install Aplikasi</button>
     </header>
 
-    <div class="container">
+    <div class="container" id="mainContainer">
         <!-- Aplikasi 1: Data Induk -->
         <div class="card">
             <div class="card-icon"><i class="fa-solid fa-users-rectangle"></i></div>
@@ -232,8 +232,28 @@
                 <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
             </button>
         </div>
+        
+        <!-- Aplikasi 2: Jadwal Shift (URL BARU) -->
+        <div class="card">
+            <div class="card-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="card-title">Jadwal Shift</div>
+            <div class="card-desc">Informasi dan pemantauan jadwal shift kerja operasional.</div>
+            <button class="card-btn" onclick="openApp('Jadwal Shift', 'https://script.google.com/macros/s/AKfycby--2RoY1O1apiAmrAmfvyBdmveGHWuwfTFuLcwb7M4z6bhHEoUNdK0WvHAeaPPtV-DgA/exec')">
+                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
+            </button>
+        </div>
+    </div>
 
-        <!-- Aplikasi 2: Logistik -->
+    <!-- HALAMAN RAHASIA (Sembunyi by default) -->
+    <div class="container" id="secretContainer" style="display: none;">
+        <div style="grid-column: 1 / -1; margin-bottom: 10px;">
+            <button onclick="backToMain()" style="padding: 10px 20px; background-color: var(--dark-gray); color: white; border: none; border-radius: 8px; cursor: pointer; font-family: 'Poppins', sans-serif;">
+                <i class="fa-solid fa-arrow-left" style="margin-right: 5px;"></i> Kembali ke Halaman Utama
+            </button>
+            <h2 style="margin-top: 20px; color: var(--primary-red);">Modul Khusus Internal</h2>
+        </div>
+
+        <!-- Aplikasi Logistik -->
         <div class="card">
             <div class="card-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
             <div class="card-title">Manajemen Logistik</div>
@@ -243,7 +263,7 @@
             </button>
         </div>
 
-        <!-- Aplikasi 3: Kesehatan -->
+        <!-- Aplikasi Kesehatan -->
         <div class="card">
             <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
             <div class="card-title">Manajemen Kesehatan</div>
@@ -252,21 +272,25 @@
                 <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
             </button>
         </div>
-        
-        <!-- Aplikasi 4: Jadwal Shift (BARU) -->
-        <div class="card">
-            <div class="card-icon"><i class="fa-solid fa-calendar-check"></i></div>
-            <div class="card-title">Jadwal Shift</div>
-            <div class="card-desc">Informasi dan pemantauan jadwal shift kerja operasional.</div>
-            <button class="card-btn" onclick="openApp('Jadwal Shift', 'https://script.google.com/macros/s/AKfycbzoZvMeTUIs_BrkihBraTgUG0K9xq3IzzfqyFFPs-tYi5wQTRat8Wtb3G27SYVNBqMI/exec')">
-                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
-            </button>
-        </div>
     </div>
 
     <footer>
-        &copy; 2026 SatrupaKalyana Hub - Sekolah Rakyat Banyumas
+        &copy; 2026 SatrupaKalyana Hub - Sekolah Rakyat Banyumas<br>
+        <span style="font-size: 0.8rem; color: #888;">Supported by <span id="secretTrigger" style="cursor: default;">AW</span></span>
     </footer>
+
+    <!-- MODAL PIN RAHASIA -->
+    <div id="pinModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center;">
+        <div style="background-color: white; padding: 30px; border-radius: 12px; text-align: center; width: 90%; max-width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <h3 style="margin-bottom: 20px; color: var(--dark-gray); font-family: 'Poppins', sans-serif;">Masukkan PIN Akses</h3>
+            <input type="password" id="pinInput" maxlength="6" inputmode="numeric" style="width: 100%; padding: 12px; font-size: 1.5rem; text-align: center; letter-spacing: 8px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 20px; font-family: monospace;">
+            <div style="display: flex; gap: 10px;">
+                <button onclick="closePinModal()" style="flex: 1; padding: 12px; border: none; background-color: #eee; color: #333; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: 'Poppins', sans-serif;">Batal</button>
+                <button onclick="checkPin()" style="flex: 1; padding: 12px; border: none; background-color: var(--primary-red); color: white; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: 'Poppins', sans-serif;">Buka</button>
+            </div>
+            <p id="pinError" style="color: red; font-size: 0.85rem; margin-top: 15px; display: none; font-family: 'Poppins', sans-serif;">PIN tidak valid!</p>
+        </div>
+    </div>
 
     <!-- HTML UNTUK IFRAME MODAL -->
     <div id="appModal">
@@ -327,6 +351,45 @@
                     .then(registration => console.log('ServiceWorker registered'))
                     .catch(error => console.log('ServiceWorker registration gagal: ', error));
             });
+        }
+
+        // 4. Script Halaman Rahasia (Akses PIN)
+        const secretTrigger = document.getElementById('secretTrigger');
+        const pinModal = document.getElementById('pinModal');
+        const pinInput = document.getElementById('pinInput');
+        const pinError = document.getElementById('pinError');
+        const mainContainer = document.getElementById('mainContainer');
+        const secretContainer = document.getElementById('secretContainer');
+
+        // Memancing pop-up ketika tulisan AW diklik
+        secretTrigger.addEventListener('click', () => {
+            pinModal.style.display = 'flex';
+            pinInput.value = '';
+            pinError.style.display = 'none';
+            setTimeout(() => pinInput.focus(), 100);
+        });
+
+        function closePinModal() {
+            pinModal.style.display = 'none';
+        }
+
+        function checkPin() {
+            if (pinInput.value === '121314') {
+                // Jika PIN benar, sembunyikan halaman utama dan munculkan halaman rahasia
+                pinModal.style.display = 'none';
+                mainContainer.style.display = 'none';
+                secretContainer.style.display = 'grid';
+            } else {
+                // Jika PIN salah
+                pinError.style.display = 'block';
+                pinInput.value = '';
+                pinInput.focus();
+            }
+        }
+
+        function backToMain() {
+            secretContainer.style.display = 'none';
+            mainContainer.style.display = 'grid';
         }
     </script>
 </body>
