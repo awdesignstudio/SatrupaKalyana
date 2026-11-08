@@ -9,7 +9,6 @@
     <meta name="theme-color" content="#A02B2E">
     <meta name="description" content="Portal Aplikasi UPT Sekolah Rakyat Banyumas">
     <link rel="manifest" href="manifest.json">
-    <!-- NAMA FILE DIPERBAIKI (TANPA SPASI) -->
     <link rel="apple-touch-icon" href="icon-sr.png">
     
     <!-- Font & Icon -->
@@ -48,12 +47,12 @@
         }
 
         header img {
-            max-height: 100px;
+            max-height: 80px; /* Sedikit dikecilkan agar hemat ruang */
             margin-bottom: 10px;
         }
 
         header h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--dark-gray);
             font-weight: 700;
         }
@@ -63,7 +62,7 @@
         }
         
         header p {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #666;
             margin-top: 5px;
         }
@@ -91,74 +90,59 @@
             #installBtn { display: none !important; }
         }
 
+        /* --- CSS KARTU / ICON MENU (Berjajar 2) --- */
         .container {
             flex: 1;
-            padding: 40px 20px;
-            max-width: 1100px;
+            padding: 30px 20px;
+            max-width: 600px; /* Dibuat lebih sempit agar fokus di tengah pada desktop */
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(2, 1fr); /* Pasti 2 kolom di mobile */
+            gap: 15px;
             width: 100%;
+            align-content: start;
         }
 
         .card {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 35px 25px;
+            border-radius: 16px;
+            padding: 25px 15px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            transition: all 0.2s ease;
             border: 1px solid #E5E5E5;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer; /* Menandakan seluruh kartu bisa diklik */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(160, 43, 46, 0.12);
+        .card:hover, .card:active {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(160, 43, 46, 0.15);
             border-color: var(--primary-red);
+            background-color: #fffafb;
         }
 
         .card-icon {
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             color: var(--primary-red);
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         .card-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--dark-gray);
-        }
-
-        .card-desc {
             font-size: 0.95rem;
-            color: #666;
-            margin-bottom: 30px;
-            flex-grow: 1;
-            line-height: 1.5;
-        }
-
-        .card-btn {
-            display: inline-block;
-            background-color: var(--primary-red);
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 100%;
+            color: var(--dark-gray);
+            line-height: 1.3;
         }
 
-        .card-btn:hover {
-            background-color: #852225;
+        /* Elemen yang memakan lebar penuh di dalam grid (untuk header/tombol back rahasia) */
+        .full-width {
+            grid-column: 1 / -1;
+            text-align: center;
         }
 
         /* --- CSS IFRAME MODAL --- */
@@ -202,19 +186,21 @@
             background-color: var(--dark-gray);
             color: white;
             font-size: 0.9rem;
-            margin-top: 20px;
+            margin-top: auto;
         }
 
-        @media (max-width: 600px) {
-            .container { padding: 25px 20px; }
-            header h1 { font-size: 1.5rem; }
+        /* Responsive untuk layar agak besar (Desktop/Tablet) */
+        @media (min-width: 600px) {
+            .container { 
+                grid-template-columns: repeat(3, 1fr); /* 3 kolom di layar luas */
+                max-width: 900px;
+            }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- NAMA FILE DIPERBAIKI (TANPA SPASI) -->
         <img src="icon-sr.png" alt="Logo Sekolah Rakyat Banyumas" id="logo">
         <h1>Satrupa<span>Kalyana</span> Hub</h1>
         <p>Portal Sistem Informasi Terpadu</p>
@@ -224,58 +210,42 @@
 
     <div class="container" id="mainContainer">
         <!-- Aplikasi 1: Data Induk -->
-        <div class="card">
+        <div class="card" onclick="openApp('Data Induk', 'https://script.google.com/macros/s/AKfycbysqFaVB51v1dDA28l0mb6K-8b1TEsyDHN2KtSNAJIcFwGQrKYs9TrmP5TuembhH2vSqA/exec')">
             <div class="card-icon"><i class="fa-solid fa-users-rectangle"></i></div>
-            <div class="card-title">Modul Data Induk</div>
-            <div class="card-desc">Sistem pengelolaan data pokok dan informasi dasar anak asuh.</div>
-            <button class="card-btn" onclick="openApp('Modul Data Induk', 'https://script.google.com/macros/s/AKfycbysqFaVB51v1dDA28l0mb6K-8b1TEsyDHN2KtSNAJIcFwGQrKYs9TrmP5TuembhH2vSqA/exec')">
-                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
-            </button>
+            <div class="card-title">Data Induk</div>
         </div>
         
-        <!-- Aplikasi 2: Jadwal Shift (URL BARU) -->
-        <div class="card">
+        <!-- Aplikasi 2: Jadwal Shift -->
+        <div class="card" onclick="openApp('Jadwal Shift', 'https://script.google.com/macros/s/AKfycby--2RoY1O1apiAmrAmfvyBdmveGHWuwfTFuLcwb7M4z6bhHEoUNdK0WvHAeaPPtV-DgA/exec')">
             <div class="card-icon"><i class="fa-solid fa-calendar-check"></i></div>
             <div class="card-title">Jadwal Shift</div>
-            <div class="card-desc">Informasi dan pemantauan jadwal shift kerja operasional.</div>
-            <button class="card-btn" onclick="openApp('Jadwal Shift', 'https://script.google.com/macros/s/AKfycby--2RoY1O1apiAmrAmfvyBdmveGHWuwfTFuLcwb7M4z6bhHEoUNdK0WvHAeaPPtV-DgA/exec')">
-                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
-            </button>
+        </div>
+
+        <!-- Aplikasi 3: Manajemen Kesehatan (Sekarang di Halaman Utama) -->
+        <div class="card" onclick="openApp('Kesehatan', 'https://script.google.com/macros/s/AKfycbxyYBU-0dH6Mt5s7fBgKOQNgkjk0aYh2U8HzIwtW_in2jzufA_VqLZ95KrKXFVZFPI2/exec')">
+            <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+            <div class="card-title">Kesehatan</div>
         </div>
     </div>
 
     <!-- HALAMAN RAHASIA (Sembunyi by default) -->
     <div class="container" id="secretContainer" style="display: none;">
-        <div style="grid-column: 1 / -1; margin-bottom: 10px;">
+        <div class="full-width" style="margin-bottom: 10px;">
             <button onclick="backToMain()" style="padding: 10px 20px; background-color: var(--dark-gray); color: white; border: none; border-radius: 8px; cursor: pointer; font-family: 'Poppins', sans-serif;">
-                <i class="fa-solid fa-arrow-left" style="margin-right: 5px;"></i> Kembali ke Halaman Utama
+                <i class="fa-solid fa-arrow-left" style="margin-right: 5px;"></i> Kembali
             </button>
-            <h2 style="margin-top: 20px; color: var(--primary-red);">Modul Khusus Internal</h2>
+            <h2 style="margin-top: 20px; font-size: 1.2rem; color: var(--primary-red);">Modul Khusus Internal</h2>
         </div>
 
-        <!-- Aplikasi Logistik -->
-        <div class="card">
+        <!-- Aplikasi Logistik (Hanya ini yang dikunci PIN) -->
+        <div class="card" onclick="openApp('Logistik', 'https://script.google.com/macros/s/AKfycbzuskPPzPTdOU-WDx4wamElI7pSsJfZ6l0imEF_WYlYO5zL64ifzzjuVgcxZsHjZs2hsg/exec')">
             <div class="card-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
-            <div class="card-title">Manajemen Logistik</div>
-            <div class="card-desc">Pemantauan distribusi dan pengelolaan stok barang logistik anak.</div>
-            <button class="card-btn" onclick="openApp('Manajemen Logistik', 'https://script.google.com/macros/s/AKfycbzuskPPzPTdOU-WDx4wamElI7pSsJfZ6l0imEF_WYlYO5zL64ifzzjuVgcxZsHjZs2hsg/exec')">
-                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
-            </button>
-        </div>
-
-        <!-- Aplikasi Kesehatan -->
-        <div class="card">
-            <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
-            <div class="card-title">Manajemen Kesehatan</div>
-            <div class="card-desc">Pencatatan rekam medis dan pemantauan riwayat kesehatan anak.</div>
-            <button class="card-btn" onclick="openApp('Manajemen Kesehatan', 'https://script.google.com/macros/s/AKfycbxyYBU-0dH6Mt5s7fBgKOQNgkjk0aYh2U8HzIwtW_in2jzufA_VqLZ95KrKXFVZFPI2/exec')">
-                <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Buka Aplikasi
-            </button>
+            <div class="card-title">Logistik</div>
         </div>
     </div>
 
     <footer>
-        &copy; 2026 SatrupaKalyana Hub - Sekolah Rakyat Banyumas<br>
+        &copy; 2026 SatrupaKalyana Hub - SR Banyumas<br>
         <span style="font-size: 0.8rem; color: #888;">Supported by <span id="secretTrigger" style="cursor: default;">AW</span></span>
     </footer>
 
@@ -301,7 +271,7 @@
         <iframe id="appFrame" src=""></iframe>
     </div>
 
-    <!-- SCRIPT GABUNGAN -->
+    <!-- SCRIPT -->
     <script>
         // 1. Script Iframe
         function openApp(title, url) {
@@ -375,12 +345,10 @@
 
         function checkPin() {
             if (pinInput.value === '121314') {
-                // Jika PIN benar, sembunyikan halaman utama dan munculkan halaman rahasia
                 pinModal.style.display = 'none';
                 mainContainer.style.display = 'none';
                 secretContainer.style.display = 'grid';
             } else {
-                // Jika PIN salah
                 pinError.style.display = 'block';
                 pinInput.value = '';
                 pinInput.focus();
